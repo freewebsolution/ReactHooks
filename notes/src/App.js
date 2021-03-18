@@ -6,7 +6,7 @@ const App = ({ note }) => {
       <h1>Note</h1>
       <ul>
         {note.map(nota =>
-          <li>{nota.tema} il giorno {nota.giorno} alle ore {nota.ora}</li>
+          <li key={nota.id}>{nota.tema} il giorno {nota.giorno} alle ore {nota.ora}</li>
         )}
       </ul>
     </div>
