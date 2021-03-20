@@ -7,6 +7,7 @@ const App = (props) => {
   const [newNote, setNewNote] = useState('')
   const [newDay, setNewDay] = useState('')
   const [newOur, setNewOur] = useState('')
+  const [showAll, setShowAll] = useState(true)
   const addNote = (e) => {
     e.preventDefault()
     const noteObj = {
@@ -26,7 +27,7 @@ const App = (props) => {
   const handleNoteChange = (e) => {
     console.log(e.target.value)
     setNewNote(e.target.value)
-    
+
   }
   const handleDayChange = (e) => {
     console.log(e.target.value)
@@ -37,11 +38,18 @@ const App = (props) => {
     console.log(e.target.value)
     setNewOur(e.target.value)
   }
+
+  const noteToShow = showAll
+    ? note
+    : note.filter(nota => nota.important)
   return (
     <div className="App">
       <h1>Note</h1>
+      <button onClick={() => setShowAll(!showAll)}>
+          show{showAll ? 'Important':'All'}
+      </button>
       <ul>
-        {note.map(nota =>
+        {noteToShow.map(nota =>
           <Note key={nota.id} nota={nota} />
         )}
       </ul>
