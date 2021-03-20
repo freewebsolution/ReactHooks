@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Note from './components/Note';
 import axios from 'axios';
 
+const url = 'http://localhost:3001/note';
 const App = (props) => {
   const [note, setNote] = useState([])
   const [newNote, setNewNote] = useState('')
@@ -13,7 +14,7 @@ const App = (props) => {
   useEffect(()=> {
     console.log('effect')
     axios
-      .get('http://localhost:3001/note')
+      .get(url)
       .then(res => {
         console.log('promise fullfiled')
         setNote(res.data)
@@ -30,10 +31,14 @@ const App = (props) => {
       important: Math.random() < 0.5,
       id: note.lenght + 1
     }
-    setNote(note.concat(noteObj))
-    setNewNote('')
-    setNewDay('')
-    setNewOur('')
+    axios
+    .post(url, noteObj)
+    .then(res => {
+      setNote(note.concat(res.data))
+      setNewNote('')
+      setNewDay('')
+      setNewOur('')
+    })
   }
 
   const handleNoteChange = (e) => {
