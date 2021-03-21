@@ -40,6 +40,13 @@ const App = (props) => {
       setNewOur('')
     })
   }
+  const toggleImportanceOf = id => {
+    const nota = note.find(n => n.id === id)
+    const changedNote = {...nota, important: !nota.important}
+    axios.put(`${url}/${id}`, changedNote).then(res => {
+      setNote(note.map(nota => nota.id !==id ? nota: res.data))
+    })
+  }
 
   const handleNoteChange = (e) => {
     console.log(e.target.value)
@@ -67,7 +74,11 @@ const App = (props) => {
       </button>
       <ul>
         {noteToShow.map(nota =>
-          <Note key={nota.id} nota={nota} />
+          <Note
+           key={nota.id}
+            nota={nota} 
+            toggleImportance={() => toggleImportanceOf(nota.id)}
+            />
         )}
       </ul>
       <form onSubmit={addNote}>
