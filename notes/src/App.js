@@ -11,7 +11,7 @@ const App = (props) => {
   const [newOur, setNewOur] = useState('')
   const [showAll, setShowAll] = useState(true)
 
-  useEffect(()=> {
+  useEffect(() => {
     console.log('effect')
     axios
       .get(url)
@@ -19,7 +19,7 @@ const App = (props) => {
         console.log('promise fullfiled')
         setNote(res.data)
       })
-  },[])
+  }, [])
   console.log('render', note.length, 'note')
   const addNote = (e) => {
     e.preventDefault()
@@ -32,19 +32,19 @@ const App = (props) => {
       id: note.lenght + 1
     }
     axios
-    .post(url, noteObj)
-    .then(res => {
-      setNote(note.concat(res.data))
-      setNewNote('')
-      setNewDay('')
-      setNewOur('')
-    })
+      .post(url, noteObj)
+      .then(res => {
+        setNote(note.concat(res.data))
+        setNewNote('')
+        setNewDay('')
+        setNewOur('')
+      })
   }
   const toggleImportanceOf = id => {
     const nota = note.find(n => n.id === id)
-    const changedNote = {...nota, important: !nota.important}
+    const changedNote = { ...nota, important: !nota.important }
     axios.put(`${url}/${id}`, changedNote).then(res => {
-      setNote(note.map(nota => nota.id !==id ? nota: res.data))
+      setNote(note.map(nota => nota.id !== id ? nota : res.data))
     })
   }
 
@@ -67,38 +67,64 @@ const App = (props) => {
     ? note
     : note.filter(nota => nota.important)
   return (
-    <div className="App">
+    <div className="container">
       <h1>Note</h1>
-      <button onClick={() => setShowAll(!showAll)}>
-          show{showAll ? 'Important':'All'}
+      <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
+        show {showAll ? 'important' : 'all'}
       </button>
-      <ul>
+      <ul className='collection'>
         {noteToShow.map(nota =>
           <Note
-           key={nota.id}
-            nota={nota} 
+            key={nota.id}
+            nota={nota}
             toggleImportance={() => toggleImportanceOf(nota.id)}
-            />
+          />
         )}
       </ul>
-      <form onSubmit={addNote}>
-        <input
-          placeholder="Aggiungi nota..."
-          onChange={handleNoteChange}
-          value={newNote}
-        />
-        <input
-          placeholder="Aggiungi data..."
-          onChange={handleDayChange}
-          value={newDay}
-        />
-        <input
-          placeholder="Aggiungi orario..."
-          onChange={handleOurChange}
-          value={newOur}
-        />
-        <button type="submit">Save</button>
-      </form>
+      <div class="row">
+        <form onSubmit={addNote} className='col s12'>
+          <div class="row">
+            <div class="input-field col s4">
+              <i class="material-icons prefix">chat</i>
+              <input
+                id="icon_prefix"
+                type="text"
+                className="validate"
+                name='tema'
+                onChange={handleNoteChange}
+                value={newNote}
+                required
+              />
+              <label for="icon_prefix">Aggiungi nota...</label>
+            </div>
+            <div class="input-field col s4">
+              <i class="material-icons prefix">date_range</i>
+              <input
+                id="icon_prefix"
+                type="text"
+                class="validate"
+                onChange={handleDayChange}
+                value={newDay}
+                required
+              />
+              <label for="icon_telephone">Data...</label>
+            </div>
+            <div class="input-field col s4">
+              <i class="material-icons prefix">access_time</i>
+              <input
+                id="icon_prefix"
+                type="text"
+                class="validate"
+                onChange={handleOurChange}
+                value={newOur}
+                required
+              />
+              <label for="icon_telephone">Ora...</label>
+            </div>
+          </div>
+          <button className='btn-floating  waves-effect waves-light green' type='submit'><i className="material-icons">add_to_photos</i></button>
+        </form>
+      </div>
     </div>
   );
 }
