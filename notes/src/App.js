@@ -1,9 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note';
-import axios from 'axios';
-
-const url = 'http://localhost:3001/note';
+import noteService from './services/note'
 const App = (props) => {
   const [note, setNote] = useState([])
   const [newNote, setNewNote] = useState('')
@@ -13,14 +11,12 @@ const App = (props) => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get(url)
+    noteService
+      .getAll()
       .then(res => {
-        console.log('promise fullfiled')
         setNote(res.data)
       })
   }, [])
-  console.log('render', note.length, 'note')
   const addNote = (e) => {
     e.preventDefault()
     const noteObj = {
@@ -29,10 +25,9 @@ const App = (props) => {
       ora: newOur,
       data: new Date().toISOString(),
       important: Math.random() < 0.5,
-      id: note.lenght + 1
     }
-    axios
-      .post(url, noteObj)
+    noteService
+      .create(noteObj)
       .then(res => {
         setNote(note.concat(res.data))
         setNewNote('')
@@ -43,7 +38,8 @@ const App = (props) => {
   const toggleImportanceOf = id => {
     const nota = note.find(n => n.id === id)
     const changedNote = { ...nota, important: !nota.important }
-    axios.put(`${url}/${id}`, changedNote).then(res => {
+    noteService
+    .update(id, changedNote).then(res => {
       setNote(note.map(nota => nota.id !== id ? nota : res.data))
     })
   }
