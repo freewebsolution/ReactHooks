@@ -14,47 +14,7 @@
       "data": "2021-03-18T9: 30.0981Z",
       "giorno": "21/03/2021",
       "ora": "14:30",
-      "important": false
-    },
-    {
-      "id": 3,
-      "tema": "Andare a scuola a prendere Giorgia",
-      "data": "2021-03-18T9: 30.0981Z",
-      "giorno": "21/03/2021",
-      "ora": "15:30",
-      "important": false
-    },
-    {
-      "tema": "nuovo",
-      "giorno": "12/12/2021",
-      "ora": "9.30",
-      "data": "2021-03-20T10:47:45.459Z",
-      "important": true,
-      "id": 4
-    },
-    {
-      "tema": "Chiamare Andrea",
-      "giorno": "22/03/2021",
-      "ora": "9.30",
-      "data": "2021-03-20T10:51:51.840Z",
-      "important": true,
-      "id": 5
-    },
-    {
-      "tema": "prova",
-      "giorno": "love",
-      "ora": "12.30",
-      "data": "2021-03-21T10:16:06.914Z",
-      "important": true,
-      "id": 7
-    },
-    {
-      "tema": "riunione a scuola",
-      "giorno": "23/03/2021",
-      "ora": "17.00",
-      "data": "2021-03-22T10:47:54.127Z",
-      "important": true,
-      "id": 8
+      "important": true
     },
     {
       "tema": "partita juve",

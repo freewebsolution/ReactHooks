@@ -43,13 +43,18 @@ const App = (props) => {
       setNote(note.map(nota => nota.id !== id ? nota : res.data))
     })
   }
-  const deleteNoteOf = id => {
-    note.filter(n =>n.id === id)
+  const deleteNoteOf = (id, tema) => {
+    const r = window.confirm(`Sicuro di voler cancellare la nota  ${tema} ?`)
+    if(r === false){
+      return
+    } else {
+          note.filter(n =>n.id === id)
     noteService
     .elimina(id)
     .then(()=>{
       setNote(note.filter(nota =>nota.id !== id))
     })
+    }
   }
 
   const handleNoteChange = (e) => {
@@ -82,7 +87,7 @@ const App = (props) => {
             key={nota.id}
             nota={nota}
             toggleImportance={() => toggleImportanceOf(nota.id)}
-            deleteNote={() =>deleteNoteOf(nota.id)}
+            deleteNote={() =>deleteNoteOf(nota.id, nota.tema)}
           />
         )}
       </ul>
