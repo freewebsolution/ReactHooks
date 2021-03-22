@@ -16,11 +16,16 @@ const create = newObj => {
 const update =(id, newObj) => {
     return axios.put(`${baseUrl}/${id}`, newObj)
 }
+//elimina dati DELETE
+const elimina = id =>{
+    return axios.delete(`${baseUrl}/${id}`)
+}
 
 const exportedObject = {
     getAll,
     create,
-    update
+    update,
+    elimina
 };
 
 export default exportedObject;
