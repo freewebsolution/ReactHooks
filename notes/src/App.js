@@ -5,6 +5,7 @@ import noteService from './services/note'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TextField from '@material-ui/core/TextField';
+import moment from'moment'
 const App = (props) => {
   const [note, setNote] = useState([])
   const [newNote, setNewNote] = useState('')
@@ -16,7 +17,8 @@ const App = (props) => {
     noteService
       .getAll()
       .then(res => {
-        setNote(res.data)
+        //console.log(res.data.sort((a,b) => b.giorno > a.giorno ? -1 : 1))
+        setNote(res.data.sort((a,b) => b.giorno > a.giorno ? -1 : 1))
       })
   }, [])
   const addNote = (e) => {
@@ -118,6 +120,7 @@ const App = (props) => {
                   className="validate"
                   dateFormat='dd/MM/yyyy'
                   style={{ marginLeft: '5px' }}
+                  minDate={moment().toDate()}
                   required
                   placeholderText='Data...'
                 />
