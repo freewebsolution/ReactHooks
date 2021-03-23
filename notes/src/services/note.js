@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const baseUrl = 'http://localhost:3001/note';
+const baseUrl = 'http://localhost:3008/note';
 
 //ricezione dati metodo GET
 const getAll = () =>{

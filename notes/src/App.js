@@ -2,6 +2,8 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note';
 import noteService from './services/note'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const App = (props) => {
   const [note, setNote] = useState([])
   const [newNote, setNewNote] = useState('')
@@ -10,7 +12,6 @@ const App = (props) => {
   const [showAll, setShowAll] = useState(true)
 
   useEffect(() => {
-    console.log('effect')
     noteService
       .getAll()
       .then(res => {
@@ -39,36 +40,34 @@ const App = (props) => {
     const nota = note.find(n => n.id === id)
     const changedNote = { ...nota, important: !nota.important }
     noteService
-    .update(id, changedNote).then(res => {
-      setNote(note.map(nota => nota.id !== id ? nota : res.data))
-    })
+      .update(id, changedNote).then(res => {
+        setNote(note.map(nota => nota.id !== id ? nota : res.data))
+      })
   }
   const deleteNoteOf = (id, tema) => {
     const r = window.confirm(`Sicuro di voler cancellare la nota  ${tema} ?`)
-    if(r === false){
+    if (r === false) {
       return
     } else {
-          note.filter(n =>n.id === id)
-    noteService
-    .elimina(id)
-    .then(()=>{
-      setNote(note.filter(nota =>nota.id !== id))
-    })
+      note.filter(n => n.id === id)
+      noteService
+        .elimina(id)
+        .then(() => {
+          setNote(note.filter(nota => nota.id !== id))
+        })
     }
   }
 
   const handleNoteChange = (e) => {
-    console.log(e.target.value)
     setNewNote(e.target.value)
 
   }
-  const handleDayChange = (e) => {
-    console.log(e.target.value)
-    setNewDay(e.target.value)
+  const handleDayChange = (date) => {
+    setNewDay(date)
+
   }
 
   const handleOurChange = (e) => {
-    console.log(e.target.value)
     setNewOur(e.target.value)
   }
 
@@ -87,15 +86,15 @@ const App = (props) => {
             key={nota.id}
             nota={nota}
             toggleImportance={() => toggleImportanceOf(nota.id)}
-            deleteNote={() =>deleteNoteOf(nota.id, nota.tema)}
+            deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
           />
         )}
       </ul>
-      <div class="row">
+      <div className="row">
         <form onSubmit={addNote} className='col s12'>
-          <div class="row">
-            <div class="input-field col s4">
-              <i class="material-icons prefix">chat</i>
+          <div className="row">
+            <div className="input-field col s4">
+              <i className="material-icons prefix">chat</i>
               <input
                 id="icon_prefix"
                 type="text"
@@ -105,31 +104,33 @@ const App = (props) => {
                 value={newNote}
                 required
               />
-              <label for="icon_prefix">Aggiungi nota...</label>
+              <label htmlFor="icon_prefix">Aggiungi nota...</label>
             </div>
-            <div class="input-field col s4">
-              <i class="material-icons prefix">date_range</i>
-              <input
-                id="icon_prefix"
-                type="text"
-                class="validate"
+            <div className="col s4">
+              <i className="material-icons prefix" style={{ marginRight: '5px' }}>date_range</i>
+              <DatePicker
+                autoComplete='off'
+                selected={newDay}
                 onChange={handleDayChange}
-                value={newDay}
+                id="icon_prefix"
+                className="validate"
+                dateFormat='dd/MM/yyyy'
+                style={{ marginLeft: '5px' }}
                 required
+                placeholderText='Data...'
               />
-              <label for="icon_telephone">Data...</label>
             </div>
-            <div class="input-field col s4">
-              <i class="material-icons prefix">access_time</i>
+            <div className="input-field col s4">
+              <i className="material-icons prefix">access_time</i>
               <input
                 id="icon_prefix"
                 type="text"
-                class="validate"
+                className="validate"
                 onChange={handleOurChange}
                 value={newOur}
                 required
               />
-              <label for="icon_telephone">Ora...</label>
+              <label htmlFor="icon_telephone">Ora...</label>
             </div>
           </div>
           <button className='btn-floating  waves-effect waves-light green' type='submit'><i className="material-icons">add_to_photos</i></button>
