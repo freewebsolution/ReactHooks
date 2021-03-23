@@ -17,10 +17,11 @@ const App = (props) => {
     noteService
       .getAll()
       .then(res => {
-        //console.log(res.data.sort((a,b) => b.giorno > a.giorno ? -1 : 1))
         setNote(res.data.sort((a,b) => b.giorno > a.giorno ? -1 : 1))
+
       })
   }, [])
+
   const addNote = (e) => {
     e.preventDefault()
     const noteObj = {
@@ -33,7 +34,7 @@ const App = (props) => {
     noteService
       .create(noteObj)
       .then(res => {
-        setNote(note.concat(res.data))
+        setNote(note.concat(res.data).sort((a, b) => new Date(a.giorno) - new Date(b.giorno)))
         setNewNote('')
         setNewDay('')
         setNewOur('')
