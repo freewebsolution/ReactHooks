@@ -4,6 +4,7 @@ import Note from './components/Note';
 import noteService from './services/note'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TextField from '@material-ui/core/TextField';
 const App = (props) => {
   const [note, setNote] = useState([])
   const [newNote, setNewNote] = useState('')
@@ -93,7 +94,7 @@ const App = (props) => {
       <div className="row">
         <form onSubmit={addNote} className='col s12'>
           <div className="row">
-            <div className="input-field col s4">
+            <div className="input-field col s6">
               <i className="material-icons prefix">chat</i>
               <input
                 id="icon_prefix"
@@ -106,31 +107,38 @@ const App = (props) => {
               />
               <label htmlFor="icon_prefix">Aggiungi nota...</label>
             </div>
-            <div className="col s4">
-              <i className="material-icons prefix" style={{ marginRight: '5px' }}>date_range</i>
-              <DatePicker
-                autoComplete='off'
-                selected={newDay}
-                onChange={handleDayChange}
-                id="icon_prefix"
-                className="validate"
-                dateFormat='dd/MM/yyyy'
-                style={{ marginLeft: '5px' }}
-                required
-                placeholderText='Data...'
-              />
+            <div className="col s3">
+              <div style={{marginTop:'16px'}}>
+                <i className="material-icons prefix" style={{ marginRight: '5px' }}>date_range</i>
+                <DatePicker
+                  autoComplete='off'
+                  selected={newDay}
+                  onChange={handleDayChange}
+                  id="icon_prefix"
+                  className="validate"
+                  dateFormat='dd/MM/yyyy'
+                  style={{ marginLeft: '5px' }}
+                  required
+                  placeholderText='Data...'
+                />
+              </div>
+
             </div>
-            <div className="input-field col s4">
-              <i className="material-icons prefix">access_time</i>
-              <input
-                id="icon_prefix"
-                type="text"
-                className="validate"
+            <div className="col s3">
+              <TextField
                 onChange={handleOurChange}
                 value={newOur}
                 required
+                id="time"
+                label="Ora..."
+                type="time"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
               />
-              <label htmlFor="icon_telephone">Ora...</label>
             </div>
           </div>
           <button className='btn-floating  waves-effect waves-light green' type='submit'><i className="material-icons">add_to_photos</i></button>

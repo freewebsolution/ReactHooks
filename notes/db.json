@@ -21,24 +21,16 @@
       "giorno": "2021-03-24T23:00:00.000Z",
       "ora": "16.30",
       "data": "2021-03-23T13:23:53.320Z",
-      "important": false,
+      "important": true,
       "id": 5
     },
     {
-      "tema": "prova",
-      "giorno": "2021-03-28T22:00:00.000Z",
-      "ora": "9.30",
-      "data": "2021-03-23T13:31:48.264Z",
+      "tema": "Revisione auto",
+      "giorno": "2021-03-30T22:00:00.000Z",
+      "ora": "15:30",
+      "data": "2021-03-23T14:32:03.407Z",
       "important": true,
       "id": 6
-    },
-    {
-      "tema": "riunione a scuola",
-      "giorno": "2021-03-28T22:00:00.000Z",
-      "ora": "9.30",
-      "data": "2021-03-23T13:32:06.805Z",
-      "important": true,
-      "id": 7
     }
   ]
 }
