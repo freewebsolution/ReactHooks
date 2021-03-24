@@ -12,8 +12,12 @@ const create = newObj => {
     return axios.post(baseUrl, newObj)
 }
 
-//modifica dati PUT
+//modifica dati PUT Importance
 const update =(id, newObj) => {
+    return axios.put(`${baseUrl}/${id}`, newObj)
+}
+//modifica dati PUT Nota
+const edit = (id, newObj) => {
     return axios.put(`${baseUrl}/${id}`, newObj)
 }
 //elimina dati DELETE
@@ -25,7 +29,8 @@ const exportedObject = {
     getAll,
     create,
     update,
-    elimina
+    elimina,
+    edit
 };
 
 export default exportedObject;

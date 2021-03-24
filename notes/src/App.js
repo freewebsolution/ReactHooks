@@ -40,6 +40,14 @@ const App = (props) => {
         setNewOur('')
       })
   }
+  const selectNoteOf = (id) => {
+    const nota = note.find(n => n.id === id)
+    const day = nota.giorno ? new Date(nota.giorno) : null
+    //console.log('tema :',nota.tema, 'Giorno: ',day, 'Ora: ',nota.ora, 'Importance: ',nota.important)
+    setNewNote(nota.tema)
+    setNewDay(day)
+    setNewOur(nota.ora)
+  }
   const toggleImportanceOf = id => {
     const nota = note.find(n => n.id === id)
     const changedNote = { ...nota, important: !nota.important }
@@ -91,6 +99,7 @@ const App = (props) => {
             nota={nota}
             toggleImportance={() => toggleImportanceOf(nota.id)}
             deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
+            editNote={() => selectNoteOf(nota.id)}
           />
         )}
       </ul>
@@ -100,15 +109,16 @@ const App = (props) => {
             <div className="input-field col s6">
               <i className="material-icons prefix">chat</i>
               <input
-                id="icon_prefix"
+                id="tema"
+                placeholder='Aggiungi nota...'
                 type="text"
                 className="validate"
                 name='tema'
                 onChange={handleNoteChange}
                 value={newNote}
+                defaultValue={note.tema}
                 required
               />
-              <label htmlFor="icon_prefix">Aggiungi nota...</label>
             </div>
             <div className="col s3">
               <div style={{marginTop:'16px'}}>

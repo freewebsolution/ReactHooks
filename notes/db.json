@@ -2,43 +2,19 @@
   "note": [
     {
       "tema": "partita juve",
-      "giorno": "2021-04-06T22:00:00.000Z",
-      "ora": "18:45",
-      "data": "2021-03-23T17:41:56.622Z",
+      "giorno": "2021-03-24T23:00:00.000Z",
+      "ora": "20:40",
+      "data": "2021-03-24T19:38:47.574Z",
       "important": true,
       "id": 1
     },
     {
-      "tema": "chiamare andrea",
-      "giorno": "2021-03-25T23:00:00.000Z",
-      "ora": "19:45",
-      "data": "2021-03-23T17:42:19.802Z",
-      "important": false,
-      "id": 2
-    },
-    {
-      "tema": "partita juve",
-      "giorno": "2021-03-26T23:00:00.000Z",
-      "ora": "18:45",
-      "data": "2021-03-23T17:56:32.768Z",
-      "important": false,
-      "id": 3
-    },
-    {
-      "tema": "revisione auto",
-      "giorno": "2021-03-27T23:00:00.000Z",
-      "ora": "09:30",
-      "data": "2021-03-23T17:57:46.886Z",
+      "tema": "riunione a scuola",
+      "giorno": "2021-03-30T22:00:00.000Z",
+      "ora": "15:45",
+      "data": "2021-03-24T19:39:07.238Z",
       "important": true,
-      "id": 4
-    },
-    {
-      "tema": "Riunione a scuola",
-      "giorno": "2021-03-29T22:00:00.000Z",
-      "ora": "15:30",
-      "data": "2021-03-23T18:00:05.238Z",
-      "important": false,
-      "id": 5
+      "id": 2
     }
   ]
 }
