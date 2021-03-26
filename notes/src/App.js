@@ -6,12 +6,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TextField from '@material-ui/core/TextField';
 import moment from 'moment'
+import Notification from './components/Notification';
 const App = (props) => {
   const [note, setNote] = useState([])
   const [newNote, setNewNote] = useState('')
   const [newDay, setNewDay] = useState('')
   const [newOur, setNewOur] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     noteService
@@ -48,7 +50,13 @@ const App = (props) => {
         setNote(note.map(nota => nota.id !== id ? nota : res.data))
       })
       .catch(error => {
-        alert(`La nota '${nota.tema} non esiste è stata eliminata`)
+        setErrorMessage(
+          `Nota '${nota.tema}' è stata rimossa dal server`
+        )
+        setTimeout(()=>{
+          setErrorMessage(null)
+        },5000)
+        setNote(note.filter(n =>n.id !== id))
       })
   }
   const deleteNoteOf = (id, tema) => {
@@ -84,6 +92,7 @@ const App = (props) => {
   return (
     <div className="container">
       <h1>Note</h1>
+      <Notification message={errorMessage}/>
       <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
         show {showAll ? 'important' : 'all'}
       </button>
