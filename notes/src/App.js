@@ -13,7 +13,7 @@ const App = (props) => {
   const [newDay, setNewDay] = useState('')
   const [newOur, setNewOur] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('null')
 
   useEffect(() => {
     noteService
