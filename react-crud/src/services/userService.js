@@ -11,9 +11,15 @@ const getAll = () => {
 const addUser = newObj => {
     return axios.post(url,newObj)
 }
+
+//Elimina utente DELETE
+const elimina = id =>{
+    return axios.delete(`${url}/${id}`)
+}
 const exportedObj = {
     getAll,
-    addUser
+    addUser,
+    elimina
 }
 
 export default exportedObj

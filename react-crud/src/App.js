@@ -19,6 +19,20 @@ const App = (props) => {
         setUsers(users.concat(res.data))
       })
   }
+
+  const deleteUser = (id, name) => {
+    const r = window.confirm(`Sicuro di voler eliminare l'utente ${name} `)
+    if(r === false) {
+      return
+    }else {
+      users.filter(u => u.id === id)
+      userService
+      .elimina(id)
+      .then(()=> {
+        setUsers(users.filter(user => user.id !== id))
+      })
+    }
+  }
   return (
     <div className="container">
       <h1>CRUD app with Hooks</h1>
@@ -29,7 +43,7 @@ const App = (props) => {
         </div>
         <div className="col-md-6">
           <h2>View User</h2>
-          <UserTable users={users} />
+          <UserTable users={users} deleteUser={deleteUser} />
         </div>
       </div>
     </div>

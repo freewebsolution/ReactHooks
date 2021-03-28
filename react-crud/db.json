@@ -1,29 +1,3 @@
 {
-  "userData": [
-    {
-      "id": 1,
-      "name": "lucio",
-      "username": "ticalilucio@gmail.com"
-    },
-    {
-      "id": 2,
-      "name": "Gracie Lind",
-      "username": "info@freewebsolution.it"
-    },
-    {
-      "id": 3,
-      "name": "Gracie Lind",
-      "username": "ticalilucio@gmail.com"
-    },
-    {
-      "id": 4,
-      "name": "Gracie Lind",
-      "username": "ticalilucio@gmail.com"
-    },
-    {
-      "id": 5,
-      "name": "Batman",
-      "username": "info@freewebsolution.it"
-    }
-  ]
+  "userData": []
 }
