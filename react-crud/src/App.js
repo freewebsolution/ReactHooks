@@ -10,6 +10,7 @@ const App = (props) => {
       .getAll()
       .then(res => {
         setUsers(res.data)
+        console.log(res.data)
       })
   }, [])
   return (
@@ -21,7 +22,7 @@ const App = (props) => {
         </div>
         <div className="col-md-6">
           <h2>View User</h2>
-          <UserTable/>
+          <UserTable users={users}/>
         </div>
       </div>
     </div>
