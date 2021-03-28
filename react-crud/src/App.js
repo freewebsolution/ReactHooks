@@ -1,6 +1,17 @@
+import React,{useState,useEffect} from'react'
 import UserTable from "./tables/UserTable";
+import userService from'./services/userService'
 
-const App = () => {
+const App = (props) => {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    userService
+      .getAll()
+      .then(res => {
+        setUsers(res.data)
+      })
+  }, [])
   return (
     <div className="container">
       <h1>CRUD app with Hooks</h1>
