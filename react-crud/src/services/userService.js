@@ -8,8 +8,8 @@ const getAll = () => {
 }
 
 //Aggiungi nuovo user POST
-const addUser = user => {
-    return axios.post(url,user)
+const addUser = newObj => {
+    return axios.post(url,newObj)
 }
 const exportedObj = {
     getAll,

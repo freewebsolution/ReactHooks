@@ -10,7 +10,7 @@ const UserTable = ({ users }) => (
             </tr>
         </thead>
         <tbody>
-            {users.length > 0 ? (
+            {users.length  ? (
                 users.map((user) => (
                     <tr key={user.id}>
                         <td>{user.name}</td>
@@ -26,7 +26,7 @@ const UserTable = ({ users }) => (
 
             ):(
                 <tr>
-                    <td colSpan={3}>Mo users</td>
+                    <td colSpan={3}>No users</td>
                 </tr>
             )
         }

@@ -1,26 +1,23 @@
-import React,{useState,useEffect} from'react'
+import React, { useState, useEffect } from 'react'
 import UserTable from "./tables/UserTable";
-import userService from'./services/userService'
+import userService from './services/userService'
 import AddUserForm from './components/AddUserForm';
 
 const App = (props) => {
   const [users, setUsers] = useState([])
-
   useEffect(() => {
     userService
       .getAll()
       .then(res => {
         setUsers(res.data)
-        console.log(res.data)
       })
   }, [])
-
   const addUser = (user) => {
     userService
-    .addUser(user)
-    .then(res => {
-      setUsers([...users,res.data])
-    })
+      .addUser(user)
+      .then(res => {
+        setUsers(users.concat(res.data))
+      })
   }
   return (
     <div className="container">
@@ -28,11 +25,11 @@ const App = (props) => {
       <div className="row">
         <div className="col-md-6">
           <h2>Add User</h2>
-          <AddUserForm addUser={addUser}/>
+          <AddUserForm addUser={addUser} />
         </div>
         <div className="col-md-6">
           <h2>View User</h2>
-          <UserTable users={users}/>
+          <UserTable users={users} />
         </div>
       </div>
     </div>
