@@ -12,6 +12,10 @@ const addUser = newObj => {
     return axios.post(url,newObj)
 }
 
+//Aggiorna user metodo PUT
+const updateUser=(id,newObj) => {
+    return axios.put(`${url}/${id}`,newObj)
+}
 //Elimina utente DELETE
 const elimina = id =>{
     return axios.delete(`${url}/${id}`)
@@ -19,7 +23,8 @@ const elimina = id =>{
 const exportedObj = {
     getAll,
     addUser,
-    elimina
+    elimina,
+    updateUser
 }
 
 export default exportedObj
