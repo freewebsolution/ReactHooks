@@ -16,6 +16,7 @@ const App = (props) => {
         setUsers(res.data)
       })
   }, [])
+
   const addUser = (user) => {
     userService
       .addUser(user)
@@ -35,7 +36,9 @@ const App = (props) => {
         .then(() => {
           setUsers(users.filter(user => user.id !== id))
         })
+        
     }
+    setEditing(false)
   }
   const editRow = user => {
     setEditing(true)
