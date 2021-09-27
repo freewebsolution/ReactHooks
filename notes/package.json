@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "json-server": "^0.16.3",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-datepicker": "^3.6.0",
@@ -24,8 +25,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "json-server": "json-server -p 3008 --watch db.json"
+    "json-server": "json-server -p 3008 --watch db.json",
+    "stop": "taskkill -F -IM node.exe"
   },
+  "proxy": "http://127.0.0.1:3001",
   "eslintConfig": {
     "extends": [
       "react-app",

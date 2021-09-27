@@ -14,6 +14,8 @@ const App = (props) => {
   const [newOur, setNewOur] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState('null')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     noteService
@@ -86,6 +88,11 @@ const App = (props) => {
     setNewOur(e.target.value)
   }
 
+  const handleLogin = (event) => {
+    event.preventDefault()
+    console.log('logging in whit', username, password)
+  }
+
   const noteToShow = showAll
     ? note
     : note.filter(nota => nota.important)
@@ -93,6 +100,47 @@ const App = (props) => {
     <div className="container">
       <h1>Note</h1>
       <Notification message={errorMessage} />
+      <div id="login-page" className="row">
+        <div className="col s12 z-depth-6 card-panel">
+          <form className="login-form">
+            <div className="row">
+            </div>
+            <div className="row">
+              <div className="input-field col s12">
+                <i className="material-icons prefix">account_box</i>
+                <input
+                  className="validate"
+                  id="user"
+                  type="text"
+                  name='Username'
+                  value={username}
+                  onChange={({target}) => setUsername(target.value)}
+                />
+                <label htmlFor="user" data-error="wrong" data-success="right">User</label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="input-field col s12">
+                <i className="material-icons prefix">lock_outline</i>
+                <input id="password"
+                 type="password"
+                 value={password}
+                 name='Password'
+                 onChange={({target})=> setPassword(target.value)}
+                  />
+                <label htmlFor="password">Password</label>
+              </div>
+            </div>
+            <div className="row">
+            </div>
+            <div className="row">
+              <div className="input-field col s12">
+                <button type="submit" className="btn waves-effect waves-light col s12">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
       <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
         show {showAll ? 'important' : 'all'}
       </button>
