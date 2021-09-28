@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "concurrently --kill-others \"npm run start-react\" \"npm run json-server\"",
-    "start-react": "PORT=3007 react-scripts start",
+    "start-react": "PORT=3009 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
