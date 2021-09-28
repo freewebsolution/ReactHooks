@@ -15,7 +15,7 @@ const App = (props) => {
     const [newDay, setNewDay] = useState('')
     const [newOur, setNewOur] = useState('')
     const [showAll, setShowAll] = useState(true)
-    const [errorMessage, setErrorMessage] = useState('null')
+    const [errorMessage, setErrorMessage] = useState(null)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
@@ -27,6 +27,9 @@ const App = (props) => {
             const user = await LoginService.login({
                 username, password,
             })
+            localStorage.setItem(
+                'loggedNoteAppUser',JSON.stringify(user)
+            )
             noteService.setToken(user.token)
             setUser(user)
             setUsername('')
@@ -46,6 +49,15 @@ const App = (props) => {
                 setNote(res.data.sort((a, b) => b.giorno > a.giorno ? -1 : 1))
 
             })
+    }, [])
+
+    useEffect(()=>{
+        const loggedUserJSON = localStorage.getItem('loggedNoteAppUser')
+        if(loggedUserJSON){
+            const user = JSON.parse(loggedUserJSON)
+            setUser(user)
+            noteService.setToken(user.token)
+        }
     }, [])
 
     const addNote = (e) => {
