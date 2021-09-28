@@ -226,6 +226,28 @@ const App = (props) => {
             </form>
         </div>
     )
+    const noteList =() => (
+        <>
+        <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
+            show {showAll ? 'important' : 'all'}
+        </button>
+        <ul className='collection'>
+            {noteToShow.map(nota =>
+                <Note
+                    key={nota.id}
+                    nota={nota}
+                    toggleImportance={() => toggleImportanceOf(nota.id)}
+                    deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
+                />
+            )}
+        </ul>
+            </>
+    )
+
+   const logout =() =>{
+        localStorage.removeItem('loggedNoteAppUser')
+       setUser(null)
+   }
     return (
 
         <div className="container">
@@ -234,23 +256,13 @@ const App = (props) => {
             {user === null ?
                 loginForm() :
                 <div>
-                    <p>Ciao {user.name}</p>
+                    <p><i className="small material-icons">account_circle</i> Ciao <span style={{'fontWeight':'bolder','textTransform':'uppercase'}}>{user.name}</span> <a
+                        className="waves-effect waves-light btn-small" onClick={logout} style={{'cursor': 'pointer','marginLeft':'5px'}}>Logout <i className="small material-icons">lock_outline</i></a></p>
                     {noteForm()}
+                    {noteList()}
                 </div>
             }
-            <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
-                show {showAll ? 'important' : 'all'}
-            </button>
-            <ul className='collection'>
-                {noteToShow.map(nota =>
-                    <Note
-                        key={nota.id}
-                        nota={nota}
-                        toggleImportance={() => toggleImportanceOf(nota.id)}
-                        deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
-                    />
-                )}
-            </ul>
+
         </div>
     );
 }
