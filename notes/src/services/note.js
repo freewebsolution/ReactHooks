@@ -1,14 +1,23 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:3008/note';
+const baseUrl = 'api/notes';
 
+let token = null
+
+const setToken = newToken => {
+    token = `bearer ${newToken}`
+}
 //ricezione dati metodo GET
 const getAll = () => {
     return axios.get(baseUrl)
 }
 
 //invio dati POST
-const create = newObj => {
-    return axios.post(baseUrl, newObj)
+const create = async newObj => {
+    const config = {
+        headers: {Authorization: token},
+    }
+    const response = await axios.post(baseUrl, newObj, config)
+    return response.data
 }
 
 //modifica dati PUT 
@@ -24,7 +33,8 @@ const exportedObject = {
     getAll,
     create,
     update,
-    elimina
+    elimina,
+    setToken
 };
 
 export default exportedObject;
