@@ -28,8 +28,12 @@ const App = (props) => {
                 username, password,
             })
             localStorage.setItem(
-                'loggedNoteAppUser',JSON.stringify(user)
+                'loggedNoteAppUser', JSON.stringify(user)
             )
+            setTimeout(()=>{
+                localStorage.removeItem('loggedNoteAppUser')
+                setUser(null)
+            },1000*60*30)
             noteService.setToken(user.token)
             setUser(user)
             setUsername('')
@@ -51,9 +55,9 @@ const App = (props) => {
             })
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         const loggedUserJSON = localStorage.getItem('loggedNoteAppUser')
-        if(loggedUserJSON){
+        if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
             noteService.setToken(user.token)
@@ -68,6 +72,7 @@ const App = (props) => {
             ora: newOur,
             data: new Date().toISOString(),
             important: Math.random() < 0.5,
+            id: note.lenght + 1
         }
         noteService
             .create(noteObj)
@@ -80,19 +85,18 @@ const App = (props) => {
     }
     const toggleImportanceOf = id => {
         const nota = note.find(n => n.id === id)
-        const changedNote = {...nota, important: !nota.important}
-        noteService
-            .update(id, changedNote).then(res => {
+        const changedNote = { ...nota, important: !nota.important }
+        noteService.update(id, changedNote).then(res => {
             setNote(note.map(nota => nota.id !== id ? nota : res.data))
         })
             .catch(error => {
                 setErrorMessage(
-                    `Nota '${nota.tema}' è stata rimossa dal server`
+                    `La nota '${nota.tema}' è stata rimossa dalla lista`
                 )
                 setTimeout(() => {
                     setErrorMessage(null)
                 }, 5000)
-                setNote(note.filter(n => n.id !== id))
+
             })
     }
     const deleteNoteOf = (id, tema) => {
@@ -122,11 +126,12 @@ const App = (props) => {
         setNewOur(e.target.value)
     }
 
+
     const noteToShow = showAll
         ? note
         : note.filter(nota => nota.important)
 
-    const loginForm =() =>(
+    const loginForm = () => (
         <div id="login-page" className="row">
             <div className="col s12 z-depth-6 card-panel">
                 <form className="login-form" onSubmit={handleLogin}>
@@ -169,7 +174,7 @@ const App = (props) => {
             </div>
         </div>
     )
-    const noteForm =() =>(
+    const noteForm = () => (
         <div className="row">
             <form onSubmit={addNote} className='col s12'>
                 <div className="row">
@@ -226,28 +231,28 @@ const App = (props) => {
             </form>
         </div>
     )
-    const noteList =() => (
+    const noteList = () => (
         <>
-        <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
-            show {showAll ? 'important' : 'all'}
-        </button>
-        <ul className='collection'>
-            {noteToShow.map(nota =>
-                <Note
-                    key={nota.id}
-                    nota={nota}
-                    toggleImportance={() => toggleImportanceOf(nota.id)}
-                    deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
-                />
-            )}
-        </ul>
-            </>
+            <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
+                show {showAll ? 'important' : 'all'}
+            </button>
+            <ul className='collection'>
+                {noteToShow.map(nota =>
+                    <Note
+                        key={nota.id}
+                        nota={nota}
+                        toggleImportance={() => toggleImportanceOf(nota.id)}
+                        deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
+                    />
+                )}
+            </ul>
+        </>
     )
 
-   const logout =() =>{
+    const logout = () => {
         localStorage.removeItem('loggedNoteAppUser')
-       setUser(null)
-   }
+        setUser(null)
+    }
     return (
 
         <div className="container">
@@ -256,8 +261,11 @@ const App = (props) => {
             {user === null ?
                 loginForm() :
                 <div>
-                    <p><i className="small material-icons">account_circle</i> Ciao <span style={{'fontWeight':'bolder','textTransform':'uppercase'}}>{user.name}</span> <a
-                        className="waves-effect waves-light btn-small" onClick={logout} style={{'cursor': 'pointer','marginLeft':'5px'}}>Logout <i className="small material-icons">lock_outline</i></a></p>
+                    <p><i className="small material-icons">account_circle</i> Ciao <span
+                        style={{'fontWeight': 'bolder', 'textTransform': 'uppercase'}}>{user.name}</span> <a
+                        className="waves-effect waves-light btn-small" onClick={logout}
+                        style={{'cursor': 'pointer', 'marginLeft': '5px'}}>Logout <i
+                        className="small material-icons">lock_outline</i></a></p>
                     {noteForm()}
                     {noteList()}
                 </div>
