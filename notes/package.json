@@ -22,11 +22,11 @@
   },
   "scripts": {
     "start": "concurrently --kill-others \"npm run start-react\" \"npm run json-server\"",
-    "start-react": "PORT=3009 react-scripts start",
+    "start-react": "PORT=3005 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "json-server": "json-server -p 3008 --watch db.json",
+    "json-server": "json-server -p 3006 --watch db.json",
     "stop": "taskkill -F -IM node.exe"
   },
   "proxy": "http://127.0.0.1:3001",

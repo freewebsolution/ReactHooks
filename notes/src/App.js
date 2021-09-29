@@ -1,14 +1,13 @@
 import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Note from './components/Note';
 import noteService from './services/note'
 import DatePicker from "react-datepicker";
+import { TextField } from '@material-ui/core';
 import "react-datepicker/dist/react-datepicker.css";
-import TextField from '@material-ui/core/TextField';
-import moment from 'moment'
+import moment from 'moment';
 import Notification from './components/Notification';
 import LoginService from './services/login'
-
 const App = (props) => {
     const [note, setNote] = useState([])
     const [newNote, setNewNote] = useState('')
@@ -25,15 +24,13 @@ const App = (props) => {
 
         try {
             const user = await LoginService.login({
-                username, password,
+                username, password
             })
-            localStorage.setItem(
-                'loggedNoteAppUser', JSON.stringify(user)
-            )
-            setTimeout(()=>{
-                localStorage.removeItem('loggedNoteAppUser')
+            localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
+            setTimeout(() => {
+                localStorage.removeItem('loggedNoteappUser')
                 setUser(null)
-            },1000*60*30)
+            }, 1000 * 60 * 60);
             noteService.setToken(user.token)
             setUser(user)
             setUsername('')
@@ -42,28 +39,27 @@ const App = (props) => {
             setErrorMessage('Wrong credentials')
             setTimeout(() => {
                 setErrorMessage(null)
-            }, 5000)
+            }, 5000);
         }
     }
-
     useEffect(() => {
         noteService
             .getAll()
             .then(res => {
+                //console.log(res.data.sort((a, b) => b.giorno > a.giorno ? -1 : 1))
                 setNote(res.data.sort((a, b) => b.giorno > a.giorno ? -1 : 1))
-
             })
     }, [])
 
     useEffect(() => {
-        const loggedUserJSON = localStorage.getItem('loggedNoteAppUser')
+        const loggedUserJSON = localStorage.getItem('loggedNoteappUser')
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
             noteService.setToken(user.token)
         }
     }, [])
-
+    console.log('render', note.length, 'note')
     const addNote = (e) => {
         e.preventDefault()
         const noteObj = {
@@ -99,8 +95,8 @@ const App = (props) => {
 
             })
     }
-    const deleteNoteOf = (id, tema) => {
-        const r = window.confirm(`Sicuro di voler cancellare la nota  ${tema} ?`)
+    const deleteNotaOf = (id, tema) => {
+        const r = window.confirm(`Sicuro di voler eliminare la nota ${tema} ? `)
         if (r === false) {
             return
         } else {
@@ -114,15 +110,16 @@ const App = (props) => {
     }
 
     const handleNoteChange = (e) => {
+        console.log(e.target.value)
         setNewNote(e.target.value)
 
     }
     const handleDayChange = (date) => {
         setNewDay(date)
-
     }
 
     const handleOurChange = (e) => {
+        console.log(e.target.value)
         setNewOur(e.target.value)
     }
 
@@ -140,13 +137,8 @@ const App = (props) => {
                     <div className="row">
                         <div className="input-field col s12">
                             <i className="material-icons prefix">account_box</i>
-                            <input
-                                className="validate"
-                                id="user"
-                                type="text"
-                                name='Username'
-                                value={username}
-                                onChange={({target}) => setUsername(target.value)}
+                            <input className="validate" id="user" type="text" name='Username' value={username}
+                                onChange={({ target }) => setUsername(target.value)}
                             />
                             <label htmlFor="user" data-error="wrong" data-success="right">User</label>
                         </div>
@@ -154,11 +146,8 @@ const App = (props) => {
                     <div className="row">
                         <div className="input-field col s12">
                             <i className="material-icons prefix">lock_outline</i>
-                            <input id="password"
-                                   type="password"
-                                   value={password}
-                                   name='Password'
-                                   onChange={({target}) => setPassword(target.value)}
+                            <input id="password" type="password" value={password} name='Password' onChange={({ target }) =>
+                                setPassword(target.value)}
                             />
                             <label htmlFor="password">Password</label>
                         </div>
@@ -192,31 +181,29 @@ const App = (props) => {
                         <label htmlFor="icon_prefix">Aggiungi nota...</label>
                     </div>
                     <div className="col s3">
-                        <div style={{marginTop: '16px'}}>
-                            <i className="material-icons prefix" style={{marginRight: '5px'}}>date_range</i>
+                        <div style={{ marginTop: '16px' }}>
+                            <i className="material-icons prefix" style={{ marginRight: '5px' }}>date_range</i>
                             <DatePicker
                                 autoComplete='off'
                                 selected={newDay}
                                 onChange={handleDayChange}
-                                id="icon_prefix"
                                 className="validate"
-                                dateFormat='dd/MM/yyyy'
-                                style={{marginLeft: '5px'}}
+                                id="icon_prefix"
                                 minDate={moment().toDate()}
+                                dateFormat='dd/MM/yyyy'
                                 required
-                                placeholderText='Data...'
                             />
                         </div>
 
                     </div>
                     <div className="col s3">
                         <TextField
+                            id="time"
                             onChange={handleOurChange}
                             value={newOur}
-                            required
-                            id="time"
                             label="Ora..."
                             type="time"
+                            required
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -226,11 +213,11 @@ const App = (props) => {
                         />
                     </div>
                 </div>
-                <button className='btn-floating  waves-effect waves-light green' type='submit'><i
-                    className="material-icons">add_to_photos</i></button>
+                <button className='btn-floating  waves-effect waves-light green' type='submit'><i className="material-icons">add_to_photos</i></button>
             </form>
         </div>
     )
+
     const noteList = () => (
         <>
             <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
@@ -242,35 +229,29 @@ const App = (props) => {
                         key={nota.id}
                         nota={nota}
                         toggleImportance={() => toggleImportanceOf(nota.id)}
-                        deleteNote={() => deleteNoteOf(nota.id, nota.tema)}
+                        deleteNota={() => deleteNotaOf(nota.id, nota.tema)}
                     />
                 )}
             </ul>
         </>
     )
-
     const logout = () => {
-        localStorage.removeItem('loggedNoteAppUser')
+        localStorage.removeItem('loggedNoteappUser')
         setUser(null)
     }
     return (
-
         <div className="container">
             <h1>Note</h1>
-            <Notification message={errorMessage}/>
+            <Notification message={errorMessage} />
             {user === null ?
                 loginForm() :
                 <div>
-                    <p><i className="small material-icons">account_circle</i> Ciao <span
-                        style={{'fontWeight': 'bolder', 'textTransform': 'uppercase'}}>{user.name}</span> <a
-                        className="waves-effect waves-light btn-small" onClick={logout}
-                        style={{'cursor': 'pointer', 'marginLeft': '5px'}}>Logout <i
-                        className="small material-icons">lock_outline</i></a></p>
+                    <p>Ciao {user.name} <button className="waves-effect waves-light btn-small" onClick={logout}>Logout <i className="material-icons">lock_outline</i></button></p>
                     {noteForm()}
                     {noteList()}
                 </div>
-            }
 
+            }
         </div>
     );
 }
