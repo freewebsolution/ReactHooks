@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import Notification from './components/Notification';
 import LoginService from './services/login'
+import LoginForm from './components/LoginForm';
 const App = (props) => {
     const [note, setNote] = useState([])
     const [newNote, setNewNote] = useState('')
@@ -18,6 +19,7 @@ const App = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
+    const [loginVisible, setLoginVisible] = useState(false)
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -128,41 +130,29 @@ const App = (props) => {
         ? note
         : note.filter(nota => nota.important)
 
-    const loginForm = () => (
-        <div id="login-page" className="row">
-            <div className="col s12 z-depth-6 card-panel">
-                <form className="login-form" onSubmit={handleLogin}>
-                    <div className="row">
+    const loginForm = () => {
+        const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+        const showWhenVisible = { display: loginVisible ? '' : 'none' }
+        return (
+            <>
+                <div id="login-page" className="row">
+                    <div style={hideWhenVisible}>
+                        <button className="waves-effect waves-light btn" onClick={() => setLoginVisible(true)}>Log in</button>
                     </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <i className="material-icons prefix">account_box</i>
-                            <input className="validate" id="user" type="text" name='Username' value={username}
-                                onChange={({ target }) => setUsername(target.value)}
-                            />
-                            <label htmlFor="user" data-error="wrong" data-success="right">User</label>
-                        </div>
+                    <div className="col s12 z-depth-6 card-panel" style={showWhenVisible}>
+                        <LoginForm
+                            username={username}
+                            password={password}
+                            handleUsernameChange={({ target }) => setUsername(target.value)}
+                            handlePasswordChange={({ target }) => setPassword(target.value)}
+                            handleSubmit={handleLogin}
+                        />
+                        <button className="waves-effect waves-light btn red" onClick={() => setLoginVisible(false)}>Cancel</button>
                     </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <i className="material-icons prefix">lock_outline</i>
-                            <input id="password" type="password" value={password} name='Password' onChange={({ target }) =>
-                                setPassword(target.value)}
-                            />
-                            <label htmlFor="password">Password</label>
-                        </div>
-                    </div>
-                    <div className="row">
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <button type="submit" className="btn waves-effect waves-light col s12">Login</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    )
+                </div>
+            </>
+        )
+    }
     const noteForm = () => (
         <div className="row">
             <form onSubmit={addNote} className='col s12'>
