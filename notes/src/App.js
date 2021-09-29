@@ -2,13 +2,11 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note';
 import noteService from './services/note'
-import DatePicker from "react-datepicker";
-import { TextField } from '@material-ui/core';
-import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment';
 import Notification from './components/Notification';
 import LoginService from './services/login'
 import LoginForm from './components/LoginForm';
+import Toggable from './components/Toggable';
+import NoteForm from './components/NoteForm';
 const App = (props) => {
     const [note, setNote] = useState([])
     const [newNote, setNewNote] = useState('')
@@ -19,7 +17,6 @@ const App = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
-    const [loginVisible, setLoginVisible] = useState(false)
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -131,15 +128,10 @@ const App = (props) => {
         : note.filter(nota => nota.important)
 
     const loginForm = () => {
-        const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-        const showWhenVisible = { display: loginVisible ? '' : 'none' }
         return (
-            <>
+
                 <div id="login-page" className="row">
-                    <div style={hideWhenVisible}>
-                        <button className="waves-effect waves-light btn" onClick={() => setLoginVisible(true)}>Log in</button>
-                    </div>
-                    <div className="col s12 z-depth-6 card-panel" style={showWhenVisible}>
+                    <Toggable buttonLabel='Login'>
                         <LoginForm
                             username={username}
                             password={password}
@@ -147,64 +139,24 @@ const App = (props) => {
                             handlePasswordChange={({ target }) => setPassword(target.value)}
                             handleSubmit={handleLogin}
                         />
-                        <button className="waves-effect waves-light btn red" onClick={() => setLoginVisible(false)}>Cancel</button>
-                    </div>
+                    </Toggable>
                 </div>
-            </>
+    
         )
     }
     const noteForm = () => (
         <div className="row">
-            <form onSubmit={addNote} className='col s12'>
-                <div className="row">
-                    <div className="input-field col s6">
-                        <i className="material-icons prefix">chat</i>
-                        <input
-                            id="icon_prefix"
-                            type="text"
-                            className="validate"
-                            name='tema'
-                            onChange={handleNoteChange}
-                            value={newNote}
-                            required
-                        />
-                        <label htmlFor="icon_prefix">Aggiungi nota...</label>
-                    </div>
-                    <div className="col s3">
-                        <div style={{ marginTop: '16px' }}>
-                            <i className="material-icons prefix" style={{ marginRight: '5px' }}>date_range</i>
-                            <DatePicker
-                                autoComplete='off'
-                                selected={newDay}
-                                onChange={handleDayChange}
-                                className="validate"
-                                id="icon_prefix"
-                                minDate={moment().toDate()}
-                                dateFormat='dd/MM/yyyy'
-                                required
-                            />
-                        </div>
-
-                    </div>
-                    <div className="col s3">
-                        <TextField
-                            id="time"
-                            onChange={handleOurChange}
-                            value={newOur}
-                            label="Ora..."
-                            type="time"
-                            required
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            inputProps={{
-                                step: 300, // 5 min
-                            }}
-                        />
-                    </div>
-                </div>
-                <button className='btn-floating  waves-effect waves-light green' type='submit'><i className="material-icons">add_to_photos</i></button>
-            </form>
+            <Toggable buttonLabel='New Note'>
+                <NoteForm
+                onSubmit={addNote}
+                value={newNote}
+                handleChange={handleNoteChange}
+                newDay={newDay}
+                newOur={newOur}
+                handleDayChange={handleDayChange}
+                handleOurChange={handleOurChange}
+                />
+            </Toggable>
         </div>
     )
 
@@ -213,6 +165,7 @@ const App = (props) => {
             <button className='waves-effect waves-light btn-small' onClick={() => setShowAll(!showAll)}>
                 show {showAll ? 'important' : 'all'}
             </button>
+
             <ul className='collection'>
                 {noteToShow.map(nota =>
                     <Note

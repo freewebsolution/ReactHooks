@@ -9,7 +9,6 @@ const LoginForm = ({
 }) => {
     return (
         <div>
-            <h2>Login</h2>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="row">
                 </div>
